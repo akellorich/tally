@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+li p {
+    line-height: 24px;
+}
+.inlineIcon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.thumbnail{
+	height:80px;
+	width:80px;
+}

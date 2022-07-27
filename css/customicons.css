@@ -1,0 +1,5 @@
+
+.ui-icon-myapp-save:after {
+	background-image: url("jqm-custom-icons/svg/save.svg") !important ;
+	background-size: 18px 18px;
+}
