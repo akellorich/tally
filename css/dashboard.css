@@ -1,0 +1,126 @@
+
+  
+  /* Dashboard gradients */
+  #dashboard{
+      /* color: white; */
+      text-align: left;
+  }
+
+  #dashboard .card-list{
+    display:flex;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+    color: rgb(255, 255, 255);
+  }
+
+  #dashboard .blue{
+      margin-top:5px;
+      margin-left:5px;
+      height: 60px;
+      width:25%;
+      background-image: linear-gradient(to right, #a3e0fc, #6387ba); 
+  }
+  
+  #dashboard .image{
+    font-size: 2rem;
+    padding-top: 15px;
+    padding-right: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px
+  }
+  
+  #dashboard .chart/*, #dashboard table*/
+  {
+    width:100%;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin:0;
+    margin-bottom: 1rem;
+   
+  }
+
+  /* table>*{
+    grid-template-columns:1fr;
+  } */
+
+  /* #dashboard table{
+   
+  } */
+
+
+
+  #dashboard .heading{
+    text-align: left;
+    font-size: 1.5em;
+    padding-top: 5px;
+    padding-left: 5px;
+  }
+  
+  #dashboard .subheading{
+    text-align: left;
+    padding-top:5px;
+    font-size:0.7em;
+  }
+  
+  #dashboard .number{
+    padding-left:10px;
+    font-size:1.8rem;
+    text-align: right;
+  }
+  
+  #dashboard .green{
+    margin-top:5px;
+    margin-left:5px;
+    height: 60px;
+    width:25%;
+    background-image: linear-gradient(to right, #9cf1ca, #09b365);
+  }
+  
+  #dashboard .red{
+    margin-top:5px;
+    margin-left:5px;
+    height: 60px;
+    width:25%;
+    background-image: linear-gradient(to right, #fcc5e7, #f00c97);
+  }
+  
+  #dashboard .purple{
+    margin-top:5px;
+    margin-left:5px;
+    height: 60px;
+    width:25%;
+    background-image: linear-gradient(to right, #e7c5f7, #6e288f);
+    margin-right:5px;
+  }
+  
+  #dashboard .sales{
+      margin-top:5px;
+      margin-left:-10px;/**/
+  }
+  
+  #dashboard .card-header{
+    height:30px;
+    padding:5px 5px;
+    color:black;
+  }
+  
+  #dashboard .card-body{
+    height:220px;
+  }
+  
+  .btn-group-xs > .btn, .btn-xs {
+    padding: .25rem .4rem;
+    font-size: .75rem;
+    line-height: .5;
+    border-radius: .2rem;
+  }
+  #dashboard .col{
+    margin-left:5px;
+    padding-left:10px;
+  }
+
+  .scrollable {
+    overflow-y:scroll; 
+    height:200px;
+    font-size: 0.7rem;
+  }

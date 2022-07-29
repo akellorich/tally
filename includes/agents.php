@@ -7,13 +7,14 @@
             return hash("SHA256",$password);
         }
 
-        function saveagent($agentid,$electionid,$polingcenter,$agentname,$agentidno,$agentmobile,$password){
+        function saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password){
             // generate salt
             $salt=$this->uniqidReal(40);
             // hash password
-            $hashedpassword=hash($password.$salt);
+            $hashedpassword=$this->hashpassword($password.$salt);
             $sql="CALL spsaveAgent ({$agentid},{$electionid},{$candidate},{$polingcenter},'{$agentname}','{$agentidno}','{$agentmobile}','{$hashedpassword}','{$salt}')";
-			$row=$this->getData($sql)->fetch();
+			// echo $sql."<br/>";
+            $row=$this->getData($sql)->fetch();
             $_SESSION['agentsavedid']=$row['Id'];
             // sms the agent his generated password.
             $sms="Hello ".$agentname.", your password for the tally portal is ". $password.". Username is your mobile phone number. Thank you.";
@@ -27,10 +28,23 @@
 
         function agentlogin($username,$password){
             $sql="CALL getAgentLogon ('{$username}')";
+            // echo $sql."<br/>";
             $rst=$this->getData($sql);
             if ($rst->rowCount()){
                 $row=$rst->fetch();
-                if(hashpassword($password.$row['salt'])==$row['password']){
+
+                // echo $row['Password']."<br/>";
+                // echo $this->hashpassword($password.$row['Salt']."<br>");
+                // // echo  "The comparison is: ".$row['Password']==$this->hashpassword($password.$row['Salt']?"True":"False");
+                // if(strval($row['Password'])==strval($this->hashpassword($password.$row['Salt']))){
+                //     echo "The comparison is true";
+                // }else{
+                //     echo "The comparison is false";
+                // }
+                $hashedpass=$this->hashpassword($password.$row['Salt']);//strval();
+                // echo $hashedpass."<br/>";
+                // echo $row['Password']."<br/>";
+                if($hashedpass==$row['Password']){
                     $_SESSION['polingstationid']=$row['PolingStationId'];
                     $_SESSION['agentid']=$row['AgentId'];
                     $_SESSION['agentusername']=$row['Mobile'];
@@ -60,14 +74,14 @@
             // generate salt
             $salt=$this->uniqidReal(40);
             // hash password
-            $hashedpassword=hashpassword($newpassword.$salt);
+            $hashedpassword=$this->hashpassword($newpassword.$salt);
 
             $sql="CALL getAgentLogon ('{$_SESSION['agentusername']}')";
             $rst=$this->getData($sql);
 			if ($rst->rowCount()) {
                 $row=$this->fetch();
-                if($row['password']==hashpassword($oldpassword.$salt)){
-                    $sql="CALL spChangeAgentPassword ({$_SESSION['agentid']},'{$hashedpassword}',0)";
+                if($row['Password']==$this->hashpassword($oldpassword.$row['Salt'])){
+                    $sql="CALL spChangeAgentPassword ({$_SESSION['agentid']},'{$hashedpassword}','{$salt}',0)";
                     $this->getData($sql);
                     return json_encode("success") ;
                 }else{

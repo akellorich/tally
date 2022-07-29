@@ -1,12 +1,21 @@
 $(document).ready(function(){
-	login=$("#login")	
-	clear=$("#clear")
-	usernamefield=$("#username")
-	passwordfield=$("#password")
-	errors=$("#errors")
+	const login=$("#login")	
+	const clear=$("#clear")
+	const usernamefield=$("#username")
+	const passwordfield=$("#password")
+	const errors=$("#errors")
+	const inputfields=$("input")
+	
+	inputfields.on("input",()=>{
+		errors.html("")
+	})
+
 	login.on("click",function(){
-		username=usernamefield.val()
-		password=passwordfield.val()
+
+		const username=usernamefield.val()
+		const password=passwordfield.val()
+		let errormessage=""
+
 		url="../includes/task.php?request=userlogon&username="+username+"&password="+password
 		if(username!="" && password!=""){
 			$.getJSON(url,function(data){
@@ -20,26 +29,27 @@ $(document).ready(function(){
 						window.location.href="main.php"
 						break;
 					case "disabled":
-						errormessage="<p>Your account has been disabled. Contact system admin<p>"
-						errors.empty()
-						$(errormessage).appendTo(errors)
+						errormessage="Account disabled. Contact Admin"
+						// errors.empty()
+						errors.html(showAlert("info",errormessage))
+						// $(errormessage).appendTo(errors)
 						break;
 					case "expired":
-						errormessage="<p>Your account has expired. Contact system admin<p>"
-						errors.empty()
-						$(errormessage).appendTo(errors)
+						errormessage="Account expired. Contact Admin"
+						errors.html(showAlert("info",errormessage))
+						break;
+					case "Invalid Username or Password.":
+						errors.html(showAlert("info",message))
 						break;
 					default:
-						errormessage="<p>"+message+"<p>"
-						errors.empty()
-						$(errormessage).appendTo(errors)
+						errormessage=""+message+""
+						errors.html(showAlert("danger",message))
 						break;
 				}
-				
 			})	
 		}else{
-			errors.html("Please enter both username and password")
+			errormessage="Please provide username and password"
+			errors.html(showAlert("info",errormessage))
 		}
-		
 	})
 })

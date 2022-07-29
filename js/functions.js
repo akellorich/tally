@@ -44,3 +44,55 @@ function hideAddressBar(){
 	  setTimeout(window.scrollTo(1,1),0);
 }
 
+
+function getconstituencies(countyid,obj, option='all'){
+  $.getJSON(
+    "../includes/task.php",
+    {
+      request:'getconstituencies',
+      countyid
+    },
+    (data)=>{
+      let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+      data.forEach((constituency)=>{
+        results+=`<option value=${constituency.ConstituencyId}>${constituency.ConstituencyName}</option>`
+      })
+      obj.html(results)
+    }
+
+  )
+}
+
+function getwards(constituencyid,obj, option='all'){
+  $.getJSON(
+    "../includes/task.php",
+    {
+      request:'getwards',
+      constituencyid
+    },
+    (data)=>{
+      let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+      data.forEach((ward)=>{
+        results+=`<option value=${ward.WardId}>${ward.WardName}</option>`
+      })
+      obj.html(results)
+    }
+  )
+}
+
+function getpolingcenters(wardid,obj, option='all'){
+  $.getJSON(
+    "../includes/task.php",
+    {
+      request:'getpolingcenters',
+      wardid
+    },
+    (data)=>{
+      let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+      data.forEach((polingcenter)=>{
+        results+=`<option value=${polingcenter.PolingCenterId}>${polingcenter.PolingCenterName}</option>`
+      })
+      obj.html(results)
+    }
+  )
+}

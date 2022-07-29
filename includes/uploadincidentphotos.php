@@ -1,7 +1,7 @@
 <?php
 // require_once 'connection.php';
 require_once("db.php");
-require_once 'mail.php';
+// require_once 'mail.php';
 
 $db=new db();
 
@@ -9,22 +9,14 @@ if(isset($_SESSION['incidentid'])){
 	// connectDB();
 	$resultid=$_SESSION['incidentid'];
 	$sql="CALL spGetIncidentFolderDetails ({$resultid})";
-	$row=$db->getData($sql);
-	$category=$_SESSION['category'];
-	
-	// $stmt = sqlsrv_query( $conn, $sql );
-	// if ($stmt) {
-	// 	$rows = sqlsrv_has_rows( $stmt );
-	// 	if ($rows === true){
-	// 		if($row=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)){
+	$row=$db->getData($sql)->fetch();
+	// $category=$_SESSION['category'];
+
 	$countyname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['CountyName'])));
 	$constituency=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['ConstituencyName'])));
 	$ward=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['WardName'])));
 	$polingcenter=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingCenterName'])));
 	$polingstationname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingStationName'])));
-	// 		}
-	// 	}
-	// }
 	
 	// check if county directory exists
 	$filename="../attachments/".$countyname;
@@ -84,16 +76,9 @@ if(isset($_SESSION['incidentid'])){
 			move_uploaded_file( $_FILES["images"]["tmp_name"][$key], $filename);
 			// add image link to the database
 			$sql="CALL spSaveIncidentPhoto ({$resultid},'{$filename}')";
-			$this->getData($sql);
-			// //echo $sql;
-			// $stmt = sqlsrv_query( $conn, $sql );
-			// if( $stmt === false) {
-			// 	die( print_r(sqlsrv_errors(), true) );
-			// }
-			// // free statement
-			// sqlsrv_free_stmt( $stmt);
+			$db->getData($sql);
 		}
 	}
 	
-	//unset($_SESSION['incidentid']);
+	unset($_SESSION['incidentid']);
 }

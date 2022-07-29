@@ -41,6 +41,31 @@
             $sql="CALL spGetPolingStations({$polingcenterid})";
             return $this->getJSON($sql);
         }
+
+        public function getcountydetailssummary(){
+            $sql="CALL `sp_getcountydetailssummary`()";
+            return $this->getJSON($sql);
+        }
+
+        public function getconstituencydetailssummary($countyid){
+            $sql="CALL `sp_getconstituencydetailssummary`({$countyid})";
+            return $this->getJSON($sql);
+        }
+
+        function getwarddetailssummary($countyid,$constituencyid){
+            $sql="CALL `sp_getwarddetailssummary`({$countyid},{$constituencyid})";
+            return $this->getJSON($sql);
+        }
+
+        function getpolingcenterdetailssummary($countyid,$constituencyid,$wardid){
+            $sql="CALL `sp_getpolingcenterdetailssummary`({$countyid},{$constituencyid},{$wardid})";
+            return $this->getJSON($sql);
+        }
+
+        function getpolingstationdetailssummary($countyid,$constituencyid,$wardid,$polingcenterid){
+            $sql="CALL `sp_getpolingstationdetailssummary`({$countyid},{$constituencyid},{$wardid},{$polingcenterid})";
+            return $this->getJSON($sql);
+        }
     }
 
 ?>

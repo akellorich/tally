@@ -1,31 +1,24 @@
 <?php
 // require_once 'connection.php';
 require_once("db.php");
-require_once 'mail.php';
+// require_once 'mail.php';
 
 $db=new db();
 
 if(isset($_SESSION['missingvoterid'])){
 	// connectDB();
 	$resultid=$_SESSION['missingvoterid'];
-	echo $resultid."<br/>";
+	// echo $resultid."<br/>";
 	$sql="CALL spGetMissingVoterFolderDetails ({$resultid})";
+	echo $sql."<br/>";
 	$row=$db->getData($sql)->fetch();
-	// $stmt = sqlsrv_query( $conn, $sql );
-	// if ($stmt) {
-	// 	$rows = sqlsrv_has_rows( $stmt );
-	// 	if ($rows === true){
-	// 		if($row=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)){
-				$countyname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['CountyName'])));
-				$constituency=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['ConstituencyName'])));
-				$ward=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['WardName'])));
-				$polingcenter=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingCenterName'])));
-				$polingstationname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingStationName'])));
-	// 		}
-	// 	}
-	// }
-	
-	// check if county directory exists
+
+	$countyname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['CountyName'])));
+	$constituency=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['ConstituencyName'])));
+	$ward=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['WardName'])));
+	$polingcenter=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingCenterName'])));
+	$polingstationname=preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '_', trim(str_replace(" ","_",$row['PolingStationName'])));
+
 	$filename="../attachments/".$countyname;
 	if (!file_exists($filename)) {
 		mkdir($filename);
@@ -78,13 +71,6 @@ if(isset($_SESSION['missingvoterid'])){
 			// add image link to the database
 			$sql="CALL spSaveVoterIDImage ({$resultid},'{$filename}')";
 			$db->getData($sql);
-			// echo $sql;
-			// $stmt = sqlsrv_query( $conn, $sql );
-			// if( $stmt === false) {
-			// 	die( print_r(sqlsrv_errors(), true) );
-			// }
-			// // free statement
-			// sqlsrv_free_stmt( $stmt);
 		}
 	}
 	

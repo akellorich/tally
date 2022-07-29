@@ -1,14 +1,15 @@
 <?php
-	require_once 'connection.php';
-	require_once 'sms.php';
 	require_once('settings.php');
 	require_once('user.php');
 	require_once('agents.php');
+	require_once('voting.php');
+	require_once ('sms.php');
 
 	// connectDB();
 	$user=new user();
 	$setting=new setting();
 	$agent=new agent();
+	$voting=new voting();
 
 	if(isset($_GET['request'])){
 		$request=$_GET['request'];
@@ -31,7 +32,6 @@
 			$status=isset($_GET['status'])?$_GET['status']:'<All>';
 			echo $setting->getelections($status);
 			break;
-			
 		case "getpositions":
 			echo $setting->getpositions();
 			break;
@@ -39,31 +39,25 @@
 			$electionid=$_GET['electionid'];
 			echo $setting->getcandidates($electionid);
 			break;
-			
 		case "getcounties":
 			echo $setting->getcounties();
 			break;
-			
 		case "getconstituencies":
 			$countyid=$_GET['countyid'];
 			echo $setting->getconstituencies($countyid);
 			break;
-			
 		case "getwards":
 			$constituencyid=$_GET['constituencyid'];
 			echo $setting->getwards($constituencyid);
 			break;
-		
 		case "getpolingcenters":
 			$wardid=$_GET['wardid'];
 			echo $setting->getpolingcenters($wardid);
 			break;
-		
 		case "getpolingstations":
 			$polingcenterid=$_GET['polingcenterid'];
 			echo $setting->getpolingstations($polingcenterid);
 			break;
-			
 		case "saveagent":
 			$agentid=$_GET['agentid'];
 			$electionid=$_GET['electionid'];
@@ -75,29 +69,25 @@
 			$password=randomPassword();
 			// check blank fields
 			if($electionid!="" && $candidate!="" && $polingcenter!="" && $agentname!="" && $agentidno!="" && $agentmobile!="" ){
-				echo $agent->saveagent($agentid,$electionid,$polingcenter,$agentname,$agentidno,$agentmobile,$password);
+				echo $agent->saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password);
 			}else{
 				echo json_encode("Please enter ALL required fields first.");
 			}			
 			break;
-			
 		case "agentlogon":
 			$username=$_GET['username'];
 			$password=$_GET['password'];
 			echo $agent->agentlogin($username,$password);
 			break;
-			
 		case "changeagentpassword":
 			$oldpassword=$_GET['oldpassword'];
 			$newpassword=$_GET['newpassword'];
 			echo $agent->changeagentpassword($oldpassword,$newpassword);
 			break;
-			
 		case "checkresults":
 			$electionid=$_GET['electionid'];
 			echo $voting->checkresults($electionid);
 			break;
-			
 		case "saveresults":
 			// generate random ref number
 			$refno=rand();
@@ -133,7 +123,7 @@
 			$pieces=$_GET['pieces'];
 			$polingstationid=$_SESSION['polingstationid'];
 			$agentid=$_SESSION['agentid'];
-			echo $voting->saveballotserialnumber($electionid,$polingcenterid,$agentid,$serialno,$pieces);
+			echo $voting->saveballotserialnumber($electionid,$polingstationid,$agentid,$serialno,$pieces);
 			break;
 		case "checkspoiltballot":
 			$electionid=$_GET['electionid'];
@@ -160,7 +150,6 @@
 			$polingstationid=$_SESSION['polingstationid'];
 			echo $voting->checkballotsealserial($electionid,$polingstationid,$category,$serialno);
 			break;
-			
 		case "saveballotboxseal":
 			$electionid=$_GET['electionid'];
 			$category=$_GET['category'];
@@ -168,7 +157,6 @@
 			$polingstationid=$_SESSION['polingstationid'];
 			echo $voting->saveballotboxseal($electionid,$agentid,$polingstationid,$category);
 			break;
-			
 		case "getglobalresultssummary":
 			$electionid=$_GET['electionid'];
 			echo $voting->getglobalresultssummary($electionid);
@@ -181,7 +169,6 @@
 			$electionid=$_GET['electionid'];
 			echo $voting->getcountylistresults($electionid);
 			break;
-			
 		case "getcountyresultssummary":
 			$electionid=$_GET['electionid'];
 			$countyid=$_GET['countyid'];
@@ -197,7 +184,6 @@
 			$countyid=$_GET['countyid'];
 			echo $voting->getconstituencylistresults($electionid,$countyid);
 			break;
-			
 		case "getconstituencyresultssummary":
 			$electionid=$_GET['electionid'];
 			$constituencyid=$_GET['constituencyid'];
@@ -213,7 +199,6 @@
 			$constituencyid=$_GET['constituencyid'];
 			echo $voting->getwardlistresults($electionid,$constituencyid);
 			break;
-		
 		case "getwardresultssummary":
 			$electionid=$_GET['electionid'];
 			$wardid=$_GET['wardid'];
@@ -229,7 +214,6 @@
 			$wardid=$_GET['wardid'];
 			echo $voting->getpolingcenterlistresults($electionid,$wardid);
 			break;
-
 		case "getpolingcenterresultsummary":
 			$electionid=$_GET['electionid'];
 			$polingcenterid=$_GET['polingcenterid'];
@@ -245,7 +229,6 @@
 			$polingcenterid=$_GET['polingcenterid'];
 			echo $voting->getpolingstationlistresults($electionid,$polingcenterid);
 			break;
-			
 		case "getpolingstationresultsummary":
 			$electionid=$_GET['electionid'];
 			$polingstationid=$_GET['polingstationid'];
@@ -304,7 +287,6 @@
 			$polingstationid=$_SESSION['polingstationid'];
 			echo $voting->missingvoterregistration($electionid,$voteridno,$votername,$reason,$agentid,$polingstationid);
 			break;
-			
 		case "checkmissingvoter":
 			$voteridno=$_GET['voteridno'];
 			$electionid=$_GET['electionid'];
@@ -316,6 +298,31 @@
 			$polingstationid=$_SESSION['polingstationid'];
 			$agentid=$_SESSION['agentid'];
 			echo $voting->saveincident($electionid,$polingstationid,$agentid,$narration);
+			break;
+		case "getcountydetailssummary":
+			echo $setting->getcountydetailssummary();
+			break;
+		case "getconstituencydetailssummary":
+			$countyid=isset($_GET['countyid'])?$_GET['countyid']:0;
+			echo $setting->getconstituencydetailssummary($countyid);
+			break;
+		case "getwarddetailssummary":
+			$countyid=isset($_GET['countyid'])?$_GET['countyid']:0;
+			$constituencyid=$_GET['constituencyid']?$_GET['constituencyid']:0;
+			echo $setting->getwarddetailssummary($countyid,$constituencyid);
+			break;
+		case "getpolingcentersdetailssummary":
+			$countyid=isset($_GET['countyid'])?$_GET['countyid']:0;
+			$constituencyid=$_GET['constituencyid']?$_GET['constituencyid']:0;
+			$wardid=$_GET['wardid']?$_GET['wardid']:0;
+			echo $setting->getpolingcenterdetailssummary($countyid,$constituencyid,$wardid);
+			break;
+		case "getpolingstationdetailssummary":
+			$countyid=isset($_GET['countyid'])?$_GET['countyid']:0;
+			$constituencyid=$_GET['constituencyid']?$_GET['constituencyid']:0;
+			$wardid=$_GET['wardid']?$_GET['wardid']:0;
+			$polingcenterid=$_GET['polingcenterid']?$_GET['polingcenterid']:0;
+			echo $setting->getpolingstationdetailssummary($countyid,$constituencyid,$wardid,$polingcenterid);
 			break;
 	}
 	

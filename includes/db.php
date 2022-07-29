@@ -1,7 +1,7 @@
    <?php 
-    $sql='';
+    session_start();
     require_once("browser.php");
-
+    $sql='';
     class db{
         private $servername;
         private $username;

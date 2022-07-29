@@ -1,17 +1,19 @@
 <?php
     require_once("db.php");
-
     class voting extends db{
 
         function checkresults($electionid){
-            $sql="spCheckElectionResult {$electionid},{$_SESSION['polingstationid']}";
+            $sql="CALL spCheckElectionResult ({$electionid},{$_SESSION['polingstationid']})";
             return json_encode($this->getData($sql)->rowCount()?"exists":"notexists");
         }
 
         function saveresults($refno,$electionid,$polingstationid,$agentid,$spoilt,$stray){
             $sql="CALL spSaveElectionResults ('{$refno}',{$electionid},{$polingstationid},{$agentid},{$spoilt},{$stray})";
-			$rst=$this->getData($sql);
+			// echo $sql."<br/>";
+            unset($_SESSION['resultid']);
+            $rst=$this->getData($sql);
             if($rst->rowCount()){
+                $row=$rst->fetch();
                 $_SESSION['resultid']=$row['ResultId'];
             }
 			else{
@@ -26,13 +28,13 @@
         }
 
         function checkballotserial($electionid,$polingstationid,$serialno){
-            $sql="spCheckSerial {$electionid},{$polingstationid},{$serialno}";
-            $rst->$this->getData($sql);
+            $sql="CALL spCheckSerial ({$electionid},{$polingstationid},{$serialno})";
+            $rst=$this->getData($sql);
             return json_encode($rst->rowCount()?"exists":"notexists");
         }
 
-        function saveballotserialnumber($electionid,$polingcenterid,$agentid,$serialno,$pieces){
-            $sql="spSaveBallotSerialNo {$electionid},{$polingstationid},{$agentid},{$serialno},{$pieces}";
+        function saveballotserialnumber($electionid,$polingstationid,$agentid,$serialno,$pieces){
+            $sql="CALL spSaveBallotSerialNo ({$electionid},{$polingstationid},{$agentid},{$serialno},{$pieces})";
             $rst=$this->getData($sql);
             if($rst->rowCount()){
                 $row=$rst->fetch();
@@ -61,26 +63,27 @@
 
         function checkballotboxseal($electionid,$polingcenterid,$category){
             $sql="CALL spCheckBallotSerial ({$electionid},{$polingstationid},{$category})";
-            return $this->getJSON($sql)->rowCount()?"exists":"notexists";
+            return json_encode($this->getJSON($sql)->rowCount()?"exists":"notexists");
         }
 
         function checkballotsealserial($electionid,$polingstationid,$category,$serialno){
             $sql="CALL spCheckBallotBoxSerialNo ({$electionid},{$polingstationid},'{$category}',{$serialno})";
-            return $this->getData($sql)->rowCount()?"exists":"notexists";
+            return json_encode($this->getData($sql)->rowCount()?"exists":"notexists");
         }
 
         function saveballotboxseal($electionid,$agentid,$polingstationid,$category){
             $sql="CALL spSaveBallotSerial ({$electionid},{$agentid},{$polingstationid},'{$category}')";
+            // echo $sql."<br/>";
             $rst=$this->getData($sql);
             if($rst->rowCount()){
                 $row=$rst->fetch();
+                // echo 'The serial no is :'.$row['Id'];
                 $_SESSION['ballotboxserial']=$row['Id'];
 				$_SESSION['category']=$category;
             }else{
                 return json_encode("error");
             }	
 		}
-        
 
         function getglobalresultssummary($electionid){
             $sql="CALL spgetelectionresultsglobal ({$electionid})";
@@ -169,7 +172,7 @@
 
         function getballotpapersissuedglobally($electionid){
             $sql="CALL spgetBallotpapersIssuedGlobally ({$electionid})";
-            return $this->getData($sql);
+            return $this->getJSON($sql);
         }
 
         function getballotpapersissuedbycounty($electionid,$countyid){
@@ -199,17 +202,17 @@
 
         function missingvoterregistration($electionid,$voteridno,$votername,$reason,$agentid,$polingstationid){
             $sql="CALL spSaveTurnedAwayVoter ({$electionid},'{$voteridno}','{$votername}','{$reason}',{$agentid},{$polingstationid})";
-            $row=$this->getData($sql)-fetch();
+            $row=$this->getData($sql)->fetch();
             $_SESSION['missingvoterid']=$row['Id'];
         }
 
         function checkmissingvoter($electionid,$voteridno){
-            $sql="spCheckTurnedAwayVoter {$electionid},'{$voteridno}'";
-            return $this->getData($sql)?"exists":"notexists";
+            $sql="CALL spCheckTurnedAwayVoter ({$electionid},'{$voteridno}')";
+            return json_encode($this->getData($sql)->rowCount()?"exists":"notexists");
         }
 
         function saveincident($electionid,$polingstationid,$agentid,$narration){
-            $sql="spSaveIncident {$electionid},{$polingstationid},{$agentid},'{$narration}'";
+            $sql="CALL spSaveIncident ({$electionid},{$polingstationid},{$agentid},'{$narration}')";
 			$row=$this->getData($sql)->fetch();
             $_SESSION['incidentid']=$row['Id'];
         }
