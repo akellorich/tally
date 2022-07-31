@@ -1,7 +1,7 @@
 <div class="sidebar-menu">
     <ul>
         <li>
-            <a href="dashboard.php"  id="dashboard">
+            <a href="main.php"  id="dashboard">
                 <span><i class="fal fa-tachometer"></i></span>
                 <span>Dashboard</span>
             </a>
@@ -23,14 +23,14 @@
 
 
          <li>
-            <a href="communication.php" id="communication">
+            <a href="events.php" id="communication">
                 <span><i class="fal fa-comments-alt"></i></span>
                 <span>Events</span>
             </a>
         </li>
 
           <li>
-            <a href="reports.php" id="reports">
+            <a href="results.php" id="reports">
                 <span><i class="fal fa-chart-area"></i></span>
                 <span>Results</span>
             </a>

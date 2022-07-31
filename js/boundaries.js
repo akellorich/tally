@@ -32,7 +32,7 @@ $(document).ready(()=>{
     getwards(0,filterpolingstationward)
     getpolingcenters(0,filterpolingstationcenter)
 
-    getcounties()
+    getcounties(countyfield)
     getcountiessummary()
     getconstituencysummary()// get all constituencies by default
     getwarddetailssummary()
@@ -84,22 +84,6 @@ $(document).ready(()=>{
                 })
                 constituencieslist.find("tbody").html(results)
                 // convert to datatable
-            }
-        )
-    }
-
-    function getcounties(){
-        let results=`<option value=0>&lt;All&gt;</option>`
-        $.getJSON(
-            "../includes/task.php",
-            {
-                request:'getcounties'
-            },
-            (data)=>{
-                data.forEach((county,index)=>{
-                    results+=`<option value=${county.CountyId}>${county.CountyName}</option>`
-                })
-                countyfield.html(results)
             }
         )
     }

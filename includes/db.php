@@ -25,10 +25,10 @@
             $this->dbname='tally';
 
             // $this->servername="localhost";
-            // $this->username="cbcstore";
-            // $this->password="4A1lB8Zhqi+@7E";
+            // $this->username="projemic";
+            // $this->password="qWl80d1V3:TE";
             // $this->charset="utf8mb4"; 
-            // $this->dbname='cbcstore_ecommerce';
+            // $this->dbname='projemic_tally';
 
             try{
                 $dsn="mysql:host=".$this->servername.";dbname=".$this->dbname.";charset=".$this->charset;

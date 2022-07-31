@@ -64,3 +64,12 @@ label.active {
 .bootbox .modal-header h4{
     font-size: 1.2rem;
 }
+
+img .small-image{
+	height: 50px!important;
+	width:50px!important;
+}
+
+img .small-rounded-image{
+	border-radius: 50%!important;
+}

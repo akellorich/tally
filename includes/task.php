@@ -66,13 +66,18 @@
 			$agentname=str_replace("'","''", $_GET['agentname']);
 			$agentidno=str_replace("'", "''",$_GET['agentidno']);
 			$agentmobile=str_replace("'", "''",$_GET['agentmobile']);
-			$password=randomPassword();
+			$generatepassword=isset($_GET['generatepassword'])?$_GET['generatepassword']:0;
+			$password=$generatepassword==1?randomPassword():$_GET['password'];
+			$changepasswordonlogon=isset($_GET['changepasswordonlogon'])?$_GET['changepasswordonlogon']:0;
 			// check blank fields
 			if($electionid!="" && $candidate!="" && $polingcenter!="" && $agentname!="" && $agentidno!="" && $agentmobile!="" ){
-				echo $agent->saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password);
+				echo $agent->saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password,$changepasswordonlogon);
 			}else{
 				echo json_encode("Please enter ALL required fields first.");
 			}			
+			break;
+		case "getagents":
+			echo $agent->getagents();
 			break;
 		case "agentlogon":
 			$username=$_GET['username'];
@@ -110,7 +115,6 @@
 			// save the results and return the results id
 			echo $voting->saveresults($refno,$electionid,$polingstationid,$agentid,$spoilt,$stray);
 			break;
-
 		case "checkballotserial":
 			$electionid=$_GET['electionid'];
 			$serialno=$_GET['startserialno'];
@@ -324,8 +328,68 @@
 			$polingcenterid=$_GET['polingcenterid']?$_GET['polingcenterid']:0;
 			echo $setting->getpolingstationdetailssummary($countyid,$constituencyid,$wardid,$polingcenterid);
 			break;
+		case "getparties":
+			echo $setting->getparties();
+			break;
 	}
 	
+	if(isset($_POST['saveparty'])){
+		$partyname=$_POST['partyname'];
+		$partyid=$_POST['partyid'];
+		// upload the party symbol
+		if($partyid==0){
+			$tempname=$_FILES['file']['tmp_name'];
+			$documentname="../images/partysymbols/".$setting->uniqidReal(20).'_'.$_FILES['file']['name'];
+			if(move_uploaded_file($tempname,$documentname)){
+				echo $setting->saveparty($partyid,$partyname,$documentname);
+			}else{
+				echo "error uploading";
+			}
+		}
+	}
+	if(isset($_POST['saveelection'])){
+		$positionid=$_POST['positionid'];
+		$electiondate=$_POST['electiondate'];
+		$electiontype=$_POST['electiontype'];
+		$addtootherboundaries=$_POST['addtootherboundaries'];
+		$description=$_POST['description'];
+		$localityid=$_POST['localityid'];
+		echo $setting->saveelection($positionid,$electiondate, $electiontype,$addtootherboundaries,$description,$localityid);
+	}
+
+	if(isset($_GET['filterelectionbyposition'])){
+		$positionid=$_GET['positionid'];
+		echo $setting->filterelectionspbyposition($positionid);
+	}
+
+	if(isset($_GET['getelectionlocalities'])){
+		$electionid=$_GET['electionid'];
+		echo $setting-> getelectionlocalities($electionid);
+	}
+
+	if(isset($_POST['savecandidate'])){
+		$candidateid=$_POST['candidateid'];
+		$candidatename=$_POST['candidatename'];
+		$partyid=$_POST['partyid'];
+		$electionid=$_POST['electionid'];
+		$localityid=$_POST['localityid'];
+		if($candidateid==0){
+			$tempname=$_FILES['file']['tmp_name'];
+			$documentname="../images/candidates/".$setting->uniqidReal(20).'_'.$_FILES['file']['name'];
+			if(move_uploaded_file($tempname,$documentname)){
+				echo $setting->savecandidate($candidateid,$candidatename,$partyid,$electionid, $localityid,$documentname);
+			}else{
+				echo "error uploading";
+			}
+		}else{
+			echo $setting->savecandidate($candidateid,$candidatename,$partyid,$electionid, $localityid,'');
+		}
+	}
+
+	if(isset($_GET['getcandidateslist'])){
+		echo $setting->getcandidateslist();
+	}
+
 	function randomPassword() {
 		$alphabet = "0123456789";
 		$pass = array(); //remember to declare $pass as an array
@@ -336,59 +400,4 @@
 		}
 		return implode($pass); //turn the array into a string
 	}
-
-	// function returnJSON($sql){
-	// 	$conn=connectDB(1);
-	// 	//echo $sql;
-	// 	$stmt = sqlsrv_query( $conn, $sql );
-	// 	if($stmt){
-	// 		$rows = sqlsrv_has_rows( $stmt );
-	// 		do {
-	// 			while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-	// 				$json[] = $row;
-	// 			}
-	// 		} while ( sqlsrv_next_result($stmt) );
-	// 		echo json_encode($json);
-	// 	}
-	// 	sqlsrv_free_stmt( $stmt);
-	// }
-	
-
-	
-	// function storeData($sql){
-	// 	$conn=connectDB(1);
-	// 	$stmt = sqlsrv_query( $conn, $sql );
-	// 	if ($stmt) {
-	// 		return true ;
-	// 	}else{
-	// 		return false;
-	// 	}
-	// }
-	
-	// function getData($sql){
-	// 	$conn=connectDB(1);
-	// 	$stmt = sqlsrv_query( $conn, $sql );
-	// 	if ($stmt) {
-	// 		$rows = sqlsrv_has_rows( $stmt );
-	// 		if ($rows === true){
-	// 			return $stmt;
-	// 		}
-	// 	}else{
-	// 		return false;
-	// 	}
-	// }
-	
-	// function checkDatabaseRecord($sql){
-	// 	$conn=connectDB(1);
-	// 	//echo $sql;
-	// 	$stmt = sqlsrv_query( $conn, $sql );
-	// 	if ($stmt) {
-	// 		$rows = sqlsrv_has_rows( $stmt );
-	// 		if ($rows === true){
-	// 			echo json_encode("exists");
-	// 		}else{
-	// 			echo json_encode("notexists");
-	// 		}
-	// 	}
-	// }
 ?>

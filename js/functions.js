@@ -44,6 +44,53 @@ function hideAddressBar(){
 	  setTimeout(window.scrollTo(1,1),0);
 }
 
+function geparties(obj, option='all'){
+  let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+  $.getJSON(
+      "../includes/task.php",
+      {
+          request:'getparties'
+      },
+      (data)=>{
+          data.forEach((party,index)=>{
+              results+=`<option value=${party.PartyId}>${party.PartyName}</option>`
+          })
+          obj.html(results)
+      }
+  )
+}
+
+function getpositions(obj, option='all'){
+  let results=option=='all'?`<option value='0' data-locality='0'>&lt;All&gt;</option>`:`<option value=''  data-locality='0'>&lt;Choose&gt;</option>`
+  $.getJSON(
+      "../includes/task.php",
+      {
+          request:'getpositions'
+      },
+      (data)=>{
+          data.forEach((position,index)=>{
+              results+=`<option value='${position.PositionId}' data-locality='${position.LocalityId}'>${position.PositionName}</option>`
+          })
+          obj.html(results)
+      }
+  )
+}
+
+function getcounties(obj, option='all'){
+  let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+  $.getJSON(
+      "../includes/task.php",
+      {
+          request:'getcounties'
+      },
+      (data)=>{
+          data.forEach((county,index)=>{
+              results+=`<option value=${county.CountyId}>${county.CountyName}</option>`
+          })
+          obj.html(results)
+      }
+  )
+}
 
 function getconstituencies(countyid,obj, option='all'){
   $.getJSON(
@@ -91,6 +138,39 @@ function getpolingcenters(wardid,obj, option='all'){
       let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
       data.forEach((polingcenter)=>{
         results+=`<option value=${polingcenter.PolingCenterId}>${polingcenter.PolingCenterName}</option>`
+      })
+      obj.html(results)
+    }
+  )
+}
+
+function getpolingstations(polingcenterid,obj, option='all'){
+  $.getJSON(
+    "../includes/task.php",
+    {
+      request:'getpolingstations',
+      polingcenterid
+    },
+    (data)=>{
+      let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+      data.forEach((polingstation)=>{
+        results+=`<option value=${polingstation.PolingStationId}>${polingstation.PolingStationName}</option>`
+      })
+      obj.html(results)
+    }
+  )
+}
+
+function getelections(obj, option='all'){
+  $.getJSON(
+    "../includes/task.php",
+    {
+      request:'getelections'
+    },
+    (data)=>{
+      let results=option=='all'?`<option value=0>&lt;All&gt;</option>`:`<option value=''>&lt;Choose&gt;</option>`
+      data.forEach((election)=>{
+        results+=`<option value=${election.ElectionId}>${election.Description}</option>`
       })
       obj.html(results)
     }

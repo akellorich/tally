@@ -7,23 +7,30 @@
             return hash("SHA256",$password);
         }
 
-        function saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password){
-            // generate salt
-            $salt=$this->uniqidReal(40);
-            // hash password
-            $hashedpassword=$this->hashpassword($password.$salt);
-            $sql="CALL spsaveAgent ({$agentid},{$electionid},{$candidate},{$polingcenter},'{$agentname}','{$agentidno}','{$agentmobile}','{$hashedpassword}','{$salt}')";
-			// echo $sql."<br/>";
-            $row=$this->getData($sql)->fetch();
-            $_SESSION['agentsavedid']=$row['Id'];
-            // sms the agent his generated password.
-            $sms="Hello ".$agentname.", your password for the tally portal is ". $password.". Username is your mobile phone number. Thank you.";
-            $smsresult=sendSMS($agentmobile, $sms);							
-            if($smsresult=='Success'){
-                return json_encode("success");
+        function saveagent($agentid,$electionid,$candidate,$polingcenter,$agentname,$agentidno,$agentmobile,$password,$changepasswordonlogon){
+            if($this->checkagentidno($agentidno)=="exists"){
+                return json_encode("Agent ID Number exists");
+            }else if($this->checkagentmobileno($agentmobile)=="exists"){
+                return json_encode("Agent Mobile No exists");
             }else{
-                return json_encode("smsfailed");
-            }   
+                // generate salt
+                $salt=$this->uniqidReal(40);
+                // hash password
+                $hashedpassword=$this->hashpassword($password.$salt);
+                $sql="CALL spsaveAgent ({$agentid},{$electionid},{$candidate},{$polingcenter},'{$agentname}','{$agentidno}','{$agentmobile}','{$hashedpassword}','{$salt}',{$changepasswordonlogon})";
+                // echo $sql."<br/>";
+                $row=$this->getData($sql)->fetch();
+                $_SESSION['agentsavedid']=$row['Id'];
+                // sms the agent his generated password.
+                $sms="Hello ".$agentname.", your password for the tally portal is ". $password.". Username is your mobile phone number. Thank you.";
+                $smsresult=sendSMS($agentmobile, $sms);							
+                if($smsresult=='Success'){
+                    return json_encode("success");
+                }else{
+                    return json_encode("smsfailed");
+                }   
+            }
+           
         }
 
         function agentlogin($username,$password){
@@ -32,18 +39,7 @@
             $rst=$this->getData($sql);
             if ($rst->rowCount()){
                 $row=$rst->fetch();
-
-                // echo $row['Password']."<br/>";
-                // echo $this->hashpassword($password.$row['Salt']."<br>");
-                // // echo  "The comparison is: ".$row['Password']==$this->hashpassword($password.$row['Salt']?"True":"False");
-                // if(strval($row['Password'])==strval($this->hashpassword($password.$row['Salt']))){
-                //     echo "The comparison is true";
-                // }else{
-                //     echo "The comparison is false";
-                // }
-                $hashedpass=$this->hashpassword($password.$row['Salt']);//strval();
-                // echo $hashedpass."<br/>";
-                // echo $row['Password']."<br/>";
+                $hashedpass=$this->hashpassword($password.$row['Salt']);
                 if($hashedpass==$row['Password']){
                     $_SESSION['polingstationid']=$row['PolingStationId'];
                     $_SESSION['agentid']=$row['AgentId'];
@@ -100,6 +96,11 @@
         function checkagentmobileno($agentmobileno){
 			$sql="CALL spCheckAgentMobileNo ('{$agentmobileno}')";
             return json_encode($this->getData($sql)->rowCount()?"exists":"notexists");
+        }
+
+        function getagents(){
+            $sql="CALL `sp_getagents`()";
+            return $this->getJSON($sql);
         }
 
     }
