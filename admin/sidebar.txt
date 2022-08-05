@@ -44,7 +44,7 @@
         </li>
 
         <li>
-            <a href="../include/task.php?logoutuser" id="logout">
+            <a href="../includes/task.php?logoutuser" id="logout">
                 <span><i class="fal fa-sign-out-alt"></i></span>
                 <span>Logout</span>
             </a>

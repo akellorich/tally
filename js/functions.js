@@ -23,6 +23,17 @@ $('table.paginated').each(function() {
     $pager.insertAfter($table).find('span.page-number:first').addClass('active');
 });
 
+const logoutuserbutton=$("#logout")
+
+logoutuserbutton.on("click",function(e){
+  // e.preventDefault()
+  // $.post(
+  //   "../includes/task.php",
+  //   {
+  //     logoutuser:true
+  //   }
+  // )
+})
 
 function getFileExtension(filename){
 	return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2)

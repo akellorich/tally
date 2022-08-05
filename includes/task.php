@@ -4,12 +4,14 @@
 	require_once('agents.php');
 	require_once('voting.php');
 	require_once ('sms.php');
+	require_once('results.php');
 
 	// connectDB();
 	$user=new user();
 	$setting=new setting();
 	$agent=new agent();
 	$voting=new voting();
+	$results=new results();
 
 	if(isset($_GET['request'])){
 		$request=$_GET['request'];
@@ -390,6 +392,45 @@
 		echo $setting->getcandidateslist();
 	}
 
+	if(isset($_GET['getelectiondetails'])){
+		$electionid=$_GET['electionid'];
+		echo $setting->getelectiondetails($electionid);
+	}
+
+	if(isset($_GET['logoutuser'])){
+		$user->logoutuser();
+        header('Location: ../admin/index.php'); 
+	}
+
+
+	if(isset($_GET['getballotboxopeningseals'])){
+		$electionid=$_GET['electionid'];
+		$countyid=$_GET['countyid'];
+		$constituencyid=$_GET['constituencyid'];
+		$wardid=$_GET['wardid'];
+		$polingcenterid=$_GET['polingcenterid'];
+		echo $results->getballotboxopenseals($electionid,$countyid,$constituencyid,$wardid,$polingcenterid);
+	}
+
+	if(isset($_GET['getballotboxsealedseals'])){
+		$electionid=$_GET['electionid'];
+		$countyid=$_GET['countyid'];
+		$constituencyid=$_GET['constituencyid'];
+		$wardid=$_GET['wardid'];
+		$polingcenterid=$_GET['polingcenterid'];
+		echo $results->getballotboxsealedseals($electionid,$countyid,$constituencyid,$wardid,$polingcenterid);
+	}
+
+	if(isset($_GET['getballotpapaersglobally'])){
+		$electionid=$_GET['electionid'];
+		echo $results->getballotpapersglobally($electionid);
+	}
+
+	if(isset($_GET['getballotpapersconstituency'])){
+		$electionid=$_GET['electionid'];
+		$countyid=$_GET['countyid'];
+		echo $results->getballotpapersconstituency($electionid,$countyid);
+	}
 	function randomPassword() {
 		$alphabet = "0123456789";
 		$pass = array(); //remember to declare $pass as an array

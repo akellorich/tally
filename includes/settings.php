@@ -115,6 +115,11 @@
             $sql="CALL `sp_getcandidates`()";
             return $this->getJSON($sql);
         }
+
+        function getelectiondetails($electionid){
+            $sql="CALL `sp_getelectiondetails`({$electionid})";
+            return $this->getData($sql);
+        }
     }
 
 ?>

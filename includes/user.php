@@ -59,6 +59,10 @@
                 return json_encode("Incorrect old password.");
             }
         }
+
+        function logoutuser(){
+            session_destroy();
+        }
     }
 
 ?>
