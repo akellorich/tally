@@ -102,14 +102,15 @@ $(document).ready(function(){
 	
 	function getCandidates(){
 		positionid=positionfield.val()
-		electionid=electionfield.val()
+		// electionid=electionfield.val()
 		// get the candidates
+		electionid=2
 		url="../includes/task.php?request=getelectioncandidates&electionid="+electionid
 		options=''
 		$.getJSON(url,function(data){
 			for (var i = 0; i < data.length; i++) {
 				options+='<li id="'+data[i].CandidateId+'"><a href="#">'
-				options+='<img src="../'+ data[i].Portrait+'" class="thumbnail" />'
+				options+='<img src="'+ data[i].Portrait+'" class="thumbnail" />'
 				options+='<h3>'+ data[i].CandidateName +' ('+data[i].Partyname+')</h3>'
 				//options+='<img src="../'+data[i].Symbol+'"></a>'
 				options+='<input type="number" id="'+data[i].CandidateId+'" name="candidatevotes"></a></li>'

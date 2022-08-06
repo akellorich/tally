@@ -1,21 +1,18 @@
-<?php 
-	require_once '../includes/connection.php';
-?>
 <html>
 <head>
-	<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet"> 
-		<link href="../css/all.css" rel="stylesheet" type="text/css" />
-		<link href="../css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
-		<link href="../css/alert.css" rel="stylesheet" id="alert-css">
-		<link href="../css/custom.css" rel="stylesheet" id="custom-css">
-		<link href="../css/master.css" rel="stylesheet" id="master-css">
-		<link href="../css/dashboard.css" rel="stylesheet" id="dashboard-css">
-		<link rel="shortcut icon" href="../images/logo.png" />
-		<link rel="icon" href="../images/logo.png" />
-	<title>Tally - Dashboard</title>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet"> 
+        <link href="../css/all.css" rel="stylesheet" type="text/css" />
+        <link href="../css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+        <link href="../css/alert.css" rel="stylesheet" id="alert-css">
+        <link href="../css/custom.css" rel="stylesheet" id="custom-css">
+        <link href="../css/master.css" rel="stylesheet" id="master-css">
+        <link href="../css/dashboard.css" rel="stylesheet" id="dashboard-css">
+        <link rel="shortcut icon" href="../images/logo.png" />
+        <link rel="icon" href="../images/logo.png" />
+    <title>Tally - Dashboard</title>
 </head>
 <body>
 <input type="checkbox" name="nav-toggle" id="nav-toggle">
@@ -107,6 +104,9 @@
                         <label class="btn btn-secondary btn-sm eventreport" data-id="turnedawayvoters">
                             <input type="radio" name="options" data-id="turnedawayvoters"><span class="text-capitalize">Turned Away Voters</span>
                         </label>
+                        <label class="btn btn-secondary btn-sm eventreport" data-id="spoiltballots">
+                            <input type="radio" name="options" data-id="spoiltballots"><span class="text-capitalize">Spoilt Ballots</span>
+                        </label>
                         <label class="btn btn-secondary btn-sm eventreport" data-id="incidences">
                             <input type="radio" name="options" data-id="incidences"><span class="text-capitalize">Incidences Recorded</span>
                         </label>
@@ -114,6 +114,7 @@
                             <input type="radio" name="options" data-id="closedballotseals"><span class="text-capitalize">Closed Ballot Box Seals</span>
                         </label>
                     </div>
+
                     <div id="ballotseals">
                         <table class="table table-sm table-striped ml-3 pr-3" id="startballotseals">
                             <thead>
@@ -133,18 +134,15 @@
                     </div>
 
                     <div id="ballotpapers">
-                    <table class='table table-sm table-striped'>
-                                <thead>
-                                    <th>#</th>
-                                    <th>County Code</th>
-                                    <th>County Name</th>
-                                    <th>Booklets</th>
-                                    <th>Ballot Papers Used</th>
-                                    <th>Registered Voters</th>
-                                    <th>Turn Out</th>
-                                </thead>
-                                <tbody><tr><td>1</td><td>030</td><td>BARINGO</td><td>2</td><td>100</td><td>298,831</td><td>0.03%</td></tr><tr><td>2</td><td>045</td><td>KISII</td><td>1</td><td>50</td><td>587,202</td><td>0.01%</td></tr></tbody></table>
                     </div>
+
+                    <div id="turnedwayavoterslist">
+                    </div>
+
+                    <div id="incidenceslist">
+                    </div>
+
+                    <div id="spoiltballotslist"></div>
                 </div>
             </div>
         </main>

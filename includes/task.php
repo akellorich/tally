@@ -431,6 +431,83 @@
 		$countyid=$_GET['countyid'];
 		echo $results->getballotpapersconstituency($electionid,$countyid);
 	}
+
+	if(isset($_GET['getturnedawayvotersglobally'])){
+		$electionid=$_GET['electionid'];
+		echo $results->getturnawayvotersglobally($electionid);
+	}
+
+	if(isset($_GET['getturnedwayvoterscounty'])){
+		$electionid=$_GET['electionid'];
+		$countyid=$_GET['countyid'];
+		echo $results->getturnawayvotersbycounty($electionid,$countyid);
+	}
+
+	if(isset($_GET['getturnawayvotersbyconstituency'])){
+		$electionid=$_GET['electionid'];
+		$constituencyid=$_GET['constituencyid'];
+		echo $results->getturnawayvotersbyconstituency($electionid,$constituencyid);
+	}
+
+	if(isset($_GET['getturnawayvotersbyward'])){
+		$electionid=$_GET['electionid'];
+		$wardid=$_GET['wardid'];
+		echo $results->getturnawayvotersbyward($electionid,$wardid);
+	}
+
+	if(isset($_GET['getturnawayvotersbypolingcenter'])){
+		$electionid=$_GET['electionid'];
+		$polingcenterid=$_GET['polingcenterid'];
+		echo $results->getturnawayvotersbypolingcenter($electionid,$polingcenterid);
+	}
+
+	if(isset($_GET['getturnawayvotersbypolingstation'])){
+		$electionid=$_GET['electionid'];
+		$polingstationid=$_GET['polingstationid'];
+		echo $results->getturnawayvotersbypolingstation($electionid,$polingstationid);
+	}
+
+
+	if(isset($_GET['getspoiltballotsglobal'])){
+		$electionid=$_GET['electionid'];
+		echo $results->getspoiltballotsglobal($electionid);
+	}
+
+	if(isset($_GET['getspoiltballotscounty'])){
+		$electionid=$_GET['electionid'];
+		$countyid=$_GET['countyid'];
+		echo $results->getspoiltballotscounty($electionid,$countyid);
+	}
+
+	if(isset($_GET['getspoiltballotsconstituency'])){
+		$electionid=$_GET['electionid'];
+		$constituencyid=$_GET['constituencyid'];
+		echo $results->getspoiltballotscounty($electionid,$constituencyid);
+	}
+
+	if(isset($_GET['getspoiltballotsward'])){
+		$electionid=$_GET['electionid'];
+		$wardid=$_GET['wardid'];
+		echo $results->getspoiltballotsward($electionid,$wardid);
+	}
+
+	if(isset($_GET['getspoiltballotspolingcenter'])){
+		$electionid=$_GET['electionid'];
+		$polingcenterid=$_GET['polingcenterid'];
+		echo $results->getspoiltballotspolingcenter($electionid,$polingcenterid);
+	}
+
+	if(isset($_GET['getspoiltballotspolingstation'])){
+		$electionid=$_GET['electionid'];
+		$polingstationid=$_GET['polingstationid'];
+		echo $results->getspoiltballotspolingstation($electionid,$polingstationid);
+	}
+
+	if(isset($_GET['getcandidateglobalresults'])){
+		$electionid=$_GET['electionid'];
+		echo $results->getcandidateglobalresults($electionid);
+	}
+
 	function randomPassword() {
 		$alphabet = "0123456789";
 		$pass = array(); //remember to declare $pass as an array

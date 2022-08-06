@@ -4,8 +4,13 @@ $(document).ready(()=>{
     const constituencyfield=$("#constituency")
     const wardfield=$("#ward")
     const polingcenterfield=$("#polingcenter")
-    const searchbutton=$("#search")
+    const searchbutton=$("#filter")
     const electiongroupselector=$("#electiongroupselector")
+    const electionresults=$("#electionresults")
+    const electionnotifications=$("#electionnotifications")
+    const selectfield=$("select")
+
+    let electionreport="candidateglobal"
 
     getcounties(countyfield)
     getconstituencies(0,constituencyfield)
@@ -49,5 +54,52 @@ $(document).ready(()=>{
                 }
             }
         )
+    })
+
+    searchbutton.on("click",()=>{
+        const electionid=electionfield.val()
+        console.log("Clicked")
+        if(electionid==""){
+            errors="Please select an election"
+            electionnotifications.html(showAlert("info",errors))
+        }else{
+            if(electionreport=="candidateglobal"){
+                getelectionglobalelectionresults(electionid) 
+            }
+        }
+    })
+
+    function getelectionglobalelectionresults(electionid){
+        $.getJSON(
+            "../includes/task.php",
+            {
+                getcandidateglobalresults:true,
+                electionid
+            },
+            (data)=>{
+                let results=`<table class='table table-sm table-striped'>
+                    <thead>
+                        <th>#</th>
+                        <th>Candidate<th>
+                        <th>Party<th>
+                        <th>Votes<th>
+                        <th>Percentage<th>
+                    </thead>
+                    <tbody>`
+                data.forEach((result,index)=>{
+                    results+=`<tr><td>${index+1}</td>`
+                    results+=`<td><img src='${result.candidateportrait}'> ${result.candidatename}</td>`
+                    results+=`<td>${result.partyname}</td>`
+                    results+=`<td>${$.number(result.votes)}</td>`
+                    results+=`<td>${$.number(result.percentage)}</td></tr>`
+                })
+                results+=`</tbody></table>`
+                electionresults.html(results)
+            }
+        )
+    }
+
+    selectfield.on("change",()=>{
+        electionnotifications.html("")
     })
 })

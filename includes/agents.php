@@ -1,6 +1,5 @@
 <?php
     require_once("db.php");
-
     class agent extends db{
 
         function hashpassword($password){
@@ -30,11 +29,10 @@
                     return json_encode("smsfailed");
                 }   
             }
-           
         }
 
         function agentlogin($username,$password){
-            $sql="CALL getAgentLogon ('{$username}')";
+            $sql="CALL getAgentLogon('{$username}')";
             // echo $sql."<br/>";
             $rst=$this->getData($sql);
             if ($rst->rowCount()){

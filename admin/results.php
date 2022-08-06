@@ -1,18 +1,18 @@
 <html>
 <head>
-	<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet"> 
-		<link href="../css/all.css" rel="stylesheet" type="text/css" />
-		<link href="../css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
-		<link href="../css/alert.css" rel="stylesheet" id="alert-css">
-		<link href="../css/custom.css" rel="stylesheet" id="custom-css">
-		<link href="../css/master.css" rel="stylesheet" id="master-css">
-		<link href="../css/dashboard.css" rel="stylesheet" id="dashboard-css">
-		<link rel="shortcut icon" href="../images/logo.jpg" />
-		<link rel="icon" href="../images/logo.jpg" />
-	<title>Tally - Dashboard</title>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet"> 
+        <link href="../css/all.css" rel="stylesheet" type="text/css" />
+        <link href="../css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+        <link href="../css/alert.css" rel="stylesheet" id="alert-css">
+        <link href="../css/custom.css" rel="stylesheet" id="custom-css">
+        <link href="../css/master.css" rel="stylesheet" id="master-css">
+        <link href="../css/dashboard.css" rel="stylesheet" id="dashboard-css">
+        <link rel="shortcut icon" href="../images/logo.png" />
+        <link rel="icon" href="../images/logo.png" />
+    <title>Tally - Dashboard</title>
 </head>
 <body>
 <input type="checkbox" name="nav-toggle" id="nav-toggle">
@@ -55,6 +55,7 @@
                     <h5>Filter Options</h5>
                 </div>
                 <div class="card-body">
+                    <div id="electionnotifications"></div>
                     <div class="row">
                         <div class="col form-group">
                             <label for="election">Election</label>
@@ -83,7 +84,7 @@
 
                         <div class="col col-md-1 form-group">
                             <label for="filter">&nbsp;</label>
-                            <button name="filter" id="filter" class="btn btn-sm btn-success d-block" id="search">Search</button>
+                            <button name="filter" id="filter" class="btn btn-sm btn-success d-block">Search</button>
                         </div>
                     </div>
                         <!-- Select report type to generate  -->
@@ -105,20 +106,23 @@
                             <input type="radio" name="options"><span class="text-capitalize">Poling Center</span>
                         </label>
                     </div>
-                    <table class="table table-sm table-striped ml-3 mr-3">
-                        <thead>
-                            <th>#</th>
-                            <th>Boundary</th>
-                            <th>Voter Turnout</th>
-                            <th>Total</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    
+                    <div id="electionresults">
+                        <table class="table table-sm table-striped ml-3 mr-3">
+                            <thead>
+                                <th>#</th>
+                                <th>Candidate</th>
+                                <th>Votes</th>
+                                <th>Percentage</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                   
                 </div>
             </div>
         </main>
     </div>
-
 </body>
 <script src="../js/jquery-2.2.4.js"></script>
 <script src="../js/alert.js"></script>
@@ -127,20 +131,4 @@
 <script src="../js/bootbox.min.js"></script>
 <script src="../js/functions.js"></script>
 <script src="../js/results.js"></script>
-<!-- <script src="../js/reports.js"></script> -->
-</html>
-
-        <main id="dasboarddetails">
-            
-        </main>
-    </div>
-
-</body>
-<script src="../js/jquery-2.2.4.js"></script>
-<script src="../js/alert.js"></script>
-<script src="../js/jquery.number.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/bootbox.min.js"></script>
-<script src="../js/functions.js"></script>
-<!-- <script src="../js/reports.js"></script> -->
 </html>
