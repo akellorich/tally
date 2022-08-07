@@ -5,10 +5,11 @@ $(document).ready(function(){
 		attachedform=$("#attachedform"),
 		startserialnofield=$("#startserial"),
 		piecesfield=$("#pieces"),
-		serialnoexists=false
-		saveserial=$("#saveserial")
-		mainmenu=$("#main")
-		formdata = new FormData()
+		serialnoexists=false,
+		saveserial=$("#saveserial"),
+		mainmenu=$("#main"),
+		formdata = new FormData(),
+		closeerror=$("#closeerror")
 	
 	$("#photoinputs").hide()
 	
@@ -138,4 +139,8 @@ $(document).ready(function(){
 			displayError(errors)
 		}	
 	}
+
+	closeerror.on("click",function(){
+		window.history.back()
+	})
 })

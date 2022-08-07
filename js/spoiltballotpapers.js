@@ -7,7 +7,8 @@ $(document).ready(function(){
 		serialnoexists=false,
 		savespoilt=$("#savespoiltballotpaper"),
 		mainmenu=$("#main"),
-		attachedphotos=[] 
+		attachedphotos=[] ,
+		closeerror=$("#closeerror")
 		
 	$("#electiongroup").hide()	
 	
@@ -169,4 +170,8 @@ $(document).ready(function(){
 			displayError(errors)
 		}	
 	}
+
+	closeerror.on("click",function(){
+		window.history.back()
+	})
 })

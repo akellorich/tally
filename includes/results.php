@@ -88,6 +88,31 @@
             return $this->getJSON($sql);
         }
 
+        function getcandidatecountyresults($electionid,$countyid){
+            $sql="CALL spGetCandidateCountyResults({$electionid},{$countyid})";
+            return $this->getJSON($sql);
+        }
+
+        function getcandidateconstituencyresults($electionid,$constituencyid){
+            $sql="CALL spGetCandidateConstituencyResults({$electionid},{$constituencyid})";
+            return $this->getJSON($sql);
+        }
+
+        function getcandidatewardresults($electionid,$wardid){
+            $sql="CALL spGetCandidateWardResults({$electionid},{$wardid})";
+            return $this->getJSON($sql);
+        }
+
+        function getcandidatepolingcenterresults($electionid,$polingcenterid){
+            $sql="CALL spGetCandidatePolingCenterResults({$electionid},{$polingcenterid})";
+            return $this->getJSON($sql);
+        }
+
+        function getcandidatepolingstationresults($electionid,$polingstationid){
+            $sql="CALL spGetCandidatePolingStationResults({$electionid},{$polingstationid})";
+            return $this->getJSON($sql);
+        }
+
     }
 
 ?>

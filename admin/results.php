@@ -78,8 +78,13 @@
                         </div>
 
                         <div class="col form-group">
-                            <label for="polingcenter">Poling Center</label>
+                            <label for="polingcenter">Center</label>
                             <select name="polingcenter" id="polingcenter" class="form-control form-control-sm"></select>
+                        </div>
+
+                        <div class="col form-group col-md-1">
+                            <label for="polingstation">Station</label>
+                            <select name="polingstation" id="polingstation" class="form-control form-control-sm"></select>
                         </div>
 
                         <div class="col col-md-1 form-group">
@@ -89,21 +94,24 @@
                     </div>
                         <!-- Select report type to generate  -->
                     <div>Group Report By:</div>
-                    <div class="col btn-group mt-2 mb-3 btn-group-toggle" id="generateeventreports" data-toggle="buttons">
-                        <label class="btn btn-secondary btn-sm active  electiongroupselector" data-id="nationalgroup">
-                            <input type="radio" name="options">Nationally
+                    <div class="col btn-group mt-2 mb-3 btn-group-toggle" id="generateresultreports" data-toggle="buttons">
+                        <label class="btn btn-secondary btn-sm active  electiongroupselector" >
+                            <input type="radio" name="options" data-id="nationalgroup">Nationally
                         </label>
-                        <label class="btn btn-secondary btn-sm electiongroupselector" data-id="countygroup">
-                            <input type="radio" name="options"><span class="text-capitalize">County</span>
+                        <label class="btn btn-secondary btn-sm electiongroupselector" >
+                            <input type="radio" name="options" data-id="countygroup"><span class="text-capitalize">County</span>
                         </label>
-                        <label class="btn btn-secondary btn-sm electiongroupselector" data-id="constituencygroup">
-                            <input type="radio" name="options"><span class="text-capitalize">Constituency</span>
+                        <label class="btn btn-secondary btn-sm electiongroupselector" >
+                            <input type="radio" name="options" data-id="constituencygroup"><span class="text-capitalize">Constituency</span>
                         </label>
-                        <label class="btn btn-secondary btn-sm electiongroupselector" data-id="wardgroup">
-                            <input type="radio" name="options"><span class="text-capitalize">Ward</span>
+                        <label class="btn btn-secondary btn-sm electiongroupselector" >
+                            <input type="radio" name="options" data-id="wardgroup"><span class="text-capitalize">Ward</span>
                         </label>
-                        <label class="btn btn-secondary btn-sm electiongroupselector" data-id="polingcentergroup">
-                            <input type="radio" name="options"><span class="text-capitalize">Poling Center</span>
+                        <label class="btn btn-secondary btn-sm electiongroupselector" >
+                            <input type="radio" name="options" data-id="polingcentergroup"><span class="text-capitalize">Poling Center</span>
+                        </label>
+                        <label class="btn btn-secondary btn-sm electiongroupselector" >
+                            <input type="radio" name="options" data-id="polingstationgroup"><span class="text-capitalize">Poling Center</span>
                         </label>
                     </div>
                     

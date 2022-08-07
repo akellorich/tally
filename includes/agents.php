@@ -1,5 +1,7 @@
 <?php
     require_once("db.php");
+    require_once("sms.php");
+  
     class agent extends db{
 
         function hashpassword($password){
@@ -101,6 +103,25 @@
             return $this->getJSON($sql);
         }
 
+        function checkagentdetails($username){
+            $sql="CALL getAgentLogon('{$username}')";
+            return $this->getData($sql)->rowCount();
+        }
+
+        function resetagentpassword($username, $password){
+            $sql="CALL getAgentLogon('{$username}')";
+            $agent=$this->getData($sql)->fetch();
+            $agentid=$agent['AgentId'];
+            $agentmobile=$agent['Mobile'];
+            $agentname=$agent['AgentName']; 
+            $message="Hello {$agentname}, your tally portal password has been reset successfully. New password is {$password}";
+            $salt=$this->uniqidReal(40);
+            $hashedpassword=$this->hashpassword($password.$salt);
+            $sql="CALL spChangeAgentPassword ({$agentid},'{$hashedpassword}',1,'{$salt}')";
+            $this->getData($sql);
+            sendSMS($agentmobile,$message);
+            return "success" ;
+        }
     }
 
 ?>

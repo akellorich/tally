@@ -69,56 +69,59 @@
                 <div class="tab-content text-left" id="nav-tabContent">
                     <!-- Counties Tab  -->
                     <div class="tab-pane fade show active" id="counties" role="tabpanel" aria-labelledby="pop1-tab">
-                        <div class="pt-3"></div>
-                        <table class="table table-sm table-striped" id="countieslist">
-                            <thead>
-                                <th>#</th>
-                                <th>County Code</th>
-                                <th>County Name</th>
-                                <th>Constituencies</th>
-                                <th>Wards</th>
-                                <th>Poling Centres</th>
-                                <th>Poling Stations</th>
-                                <th>Registered Voters</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                        <div class="pt-3 card containergroup">
+                            <div class="card-body">
+                                <table class="table table-sm table-striped" id="countieslist">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>County Code</th>
+                                        <th>County Name</th>
+                                        <th>Constituencies</th>
+                                        <th>Wards</th>
+                                        <th>Poling Centres</th>
+                                        <th>Poling Stations</th>
+                                        <th>Registered Voters</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
                     </div>
 
                     <!-- Constituencies Tab -->
                     <div class="tab-pane fade " id="constituencies" role="tabpanel" aria-labelledby="pop1-tab">
                         <div class="pt-3"></div>
                         <div class="card containergroup mb-3">
-                                <div class="card-header">
-                                    <h5>Filter Options</h5> 
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col form-group">
-                                            <label for="filterconstituencycounty">Filter By County</label>
-                                            <select name="filterconstituencycounty" id="filterconstituencycounty" class="county form-control form-control-sm"></select>
-                                        </div>
-                                        <div class="col form-group">
-                                            <label for="">&nbsp;</label>
-                                            <button class="btn btn-sm btn-success d-block" id="filterconstituencies">Filter Constituencies</button>
-                                        </div>
+                            <div class="card-header">
+                                <h5>Filter Options</h5> 
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <label for="filterconstituencycounty">Filter By County</label>
+                                        <select name="filterconstituencycounty" id="filterconstituencycounty" class="county form-control form-control-sm"></select>
                                     </div>
-                                    
-                                </div>
+                                    <div class="col form-group">
+                                        <label for="">&nbsp;</label>
+                                        <button class="btn btn-sm btn-success d-block" id="filterconstituencies">Filter Constituencies</button>
+                                    </div>
+                                </div>     
+                                <table class="table table-sm table-striped" id="constituencieslist">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>County</th>
+                                        <th>Constituency Code</th>
+                                        <th>Constituency Name</th>
+                                        <th>Wards</th>
+                                        <th>Poling Centres</th>
+                                        <th>Poling Stations</th>
+                                        <th>Registered Voters</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
-                        <table class="table table-sm table-striped" id="constituencieslist">
-                            <thead>
-                                <th>#</th>
-                                <th>County</th>
-                                <th>Constituency Code</th>
-                                <th>Constituency Name</th>
-                                <th>Wards</th>
-                                <th>Poling Centres</th>
-                                <th>Poling Stations</th>
-                                <th>Registered Voters</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
                     </div>
 
                      <!-- Wards Tab -->

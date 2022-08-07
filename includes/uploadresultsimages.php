@@ -19,14 +19,14 @@ if(isset($_SESSION['resultid'])){
 	if (!file_exists($filename)) {
 		mkdir($filename);
 	}	
-	echo $filename."<br/>";
+	// echo $filename."<br/>";
 	
 	//check constituency folder exists
 	$filename .="/".$constituency;
 	if (!file_exists($filename)) {
 		mkdir($filename);
 	}
-	echo $filename."<br/>";
+	// echo $filename."<br/>";
 	
 	//check if ward exists
 	$filename .="/".$ward;

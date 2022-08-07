@@ -31,7 +31,7 @@
 			echo $user->changeuserpassword($oldpassword,$newpassword);
 			break;
 		case "getelections":
-			$status=isset($_GET['status'])?$_GET['status']:'<All>';
+			$status=isset($_GET['status'])?$_GET['status']:'Open';
 			echo $setting->getelections($status);
 			break;
 		case "getpositions":
@@ -506,6 +506,48 @@
 	if(isset($_GET['getcandidateglobalresults'])){
 		$electionid=$_GET['electionid'];
 		echo $results->getcandidateglobalresults($electionid);
+	}
+
+	if(isset($_GET['getcandidatecountyresults'])){
+		$electionid=$_GET['elctionid'];
+		$countyid=$_GET['countyid'];
+		echo $results-> getcandidatecountyresults($electionid,$countyid);
+	}
+
+	if(isset($_GET['getcandidateconstituencyresults'])){
+		$electionid=$_GET['elctionid'];
+		$constituencyid=$_GET['constituencyid'];
+		echo $results-> getcandidateconstituencyresults($electionid,$constituencyid);
+	}
+
+	if(isset($_GET['getcandidatewardresults'])){
+		$electionid=$_GET['elctionid'];
+		$wardid=$_GET['wardid'];
+		echo $results-> getcandidatewardresults($electionid,$wardid);
+	}
+
+	if(isset($_GET['getcandidatepolingcenterresults'])){
+		$electionid=$_GET['elctionid'];
+		$polingcenterid=$_GET['polingcenterid'];
+		echo $results-> getcandidatepolingcenterresults($electionid,$polingcenterid);
+	}
+
+	if(isset($_GET['getcandidatepolingstationresults'])){
+		$electionid=$_GET['elctionid'];
+		$polingstationid=$_GET['polingstationid'];
+		echo $results-> getcandidatepolingstationresults($electionid,$polingstationid);
+	}
+
+	
+	if(isset($_POST['resetagentpassword'])){
+		$username=$_POST['username'];
+		$password=randomPassword();
+		// check if the agent exists
+		if($agent->checkagentdetails($username)){
+			echo $agent->resetagentpassword($username, $password);
+		}else{
+			echo "not exist";
+		}
 	}
 
 	function randomPassword() {
